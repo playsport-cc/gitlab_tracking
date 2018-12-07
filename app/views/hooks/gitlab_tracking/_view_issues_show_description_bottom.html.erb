@@ -30,6 +30,7 @@
                 <h3 class="gitlab-tracking-title">
                     <%= link_to "#{commit.title}", "#{commit.merge_request_url}", :target => "_blank" %>
                 </h3>
+                <p>Request to merge <%= commit.source_branch %> into  <%= commit.target_branch %> </p>   
                 <p>
                     update at 
                     <%= I18n.l commit.last_edited_at.in_time_zone(User.current.time_zone), :format => :long %>    
@@ -37,7 +38,7 @@
                 <hr>
                 <div class="gitlab-tracking-commit">
                     <p>
-                        <b>Last commit</b> &nbsp;&nbsp;
+                        <b>Last commit</b> &nbsp;
                         <%= link_to "#{commit.git_hash}", "#{commit.gitlab_url}", :target => "_blank" %>
                     </p>
                     <p><%= I18n.l commit.timestamp.in_time_zone(User.current.time_zone), :format => :long %></p>
