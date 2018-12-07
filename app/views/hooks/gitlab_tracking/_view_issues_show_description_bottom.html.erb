@@ -10,6 +10,9 @@
         left: 320px;
         top: -16px;
         background-color: #fff;}
+    .gitlab-tracking-commit {
+        color: #999;
+    }
     .gitlab-tracking-hash {margin-top: 5px;}
     .gitlab-tracking-message {margin-top: 5px; }
     .gitlab-tracking-content { width: 525px; float: left;}
@@ -21,27 +24,28 @@
 <div id="gitlab_tracking">
     <p>
         <strong>
-            GitLab Tracking
+            GitLab Merge Requests
         </strong>
     </p>
 
     <% gtc_commit_list.each do |commit| %>
         <div class="gitlab-tracking-row">
-            <div class="gitlab-tracking-avatar" style="">
-                <%= image_tag gravatar_url(commit.author_email, {size:64, ssl:true}) %>
-            </div>
             <div class="gitlab-tracking-content">
                 <div class="gitlab-tracking-date">
-                    <%= I18n.l commit.timestamp.in_time_zone(User.current.time_zone), :format => :long %>
+                    Last Update: 
+                    <%= I18n.l commit.last_edited_at.in_time_zone(User.current.time_zone), :format => :long %>
                 </div>
-                <div class="gitlab-tracking-author">
-                    <%= commit.author_name %> (<%= commit.author_email %>)
+                <div class="gitlab-tracking-title">
+                    <%= link_to "#{commit.title}", "#{commit.merge_request_url}", :target => "_blank" %>
                 </div>
-                <div class="gitlab-tracking-hash">
-                    <%= link_to "#{commit.branch} - #{commit.git_hash}", "#{commit.gitlab_url}", :target => "_blank" %>
-                </div>
-                <div class="gitlab-tracking-message">
-                    <%= commit.message %>
+                <div class="gitlab-tracking-commit">
+                    <p><b>Last commit</b></p>
+                    <p><%= link_to "#{commit.git_hash}", "#{commit.gitlab_url}", :target => "_blank" %></p>
+                    <p>
+                        <%= image_tag gravatar_url(commit.author_email, {size:32, ssl:true}) %>
+                        <%= commit.author_name %> (<%= commit.author_email %>)
+                    </p>
+                    <p><%= I18n.l commit.timestamp.in_time_zone(User.current.time_zone), :format => :long %></p>
                 </div>
             </div>
             <div class="gitlab-tracking-clear"></div>

@@ -25,6 +25,15 @@ class GitlabTrackingCommit < ActiveRecord::Base
 
       gtc.merge_request_id = attribute['id']
       gtc.merge_request_url = attribute['url']
+      gtc.title = attribute['title']
+      gtc.merge_status = attribute['merge_status']
+      gtc.state = attribute['state']
+      gtc.last_edited_at = Time.parse(attribute['last_edited_at'])
+
+      # branchs
+      gtc.source_branch = attribute['source_branch']
+      gtc.target_branch = attribute['target_branch']
+      gtc.timestamp = Time.parse(last_commit['timestamp'])
 
       # commit
       gtc.author_email = last_commit['author']['email']

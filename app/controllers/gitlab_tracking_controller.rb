@@ -31,19 +31,6 @@ class GitlabTrackingController < ApplicationController
             # ignored
           end
       end
-
-      # body['commits'].each do |commit|
-      #   match_regexp = commit['message'].gsub search_regexp
-      #   match_regexp.each do |issue_raw|
-      #     issue_raw =~ /(?<issue_number>\d+)/
-      #     begin
-      #       issue = Issue.find(Regexp.last_match['issue_number'].to_i)
-      #       GitlabTrackingCommit.parse_commit_and_create(issue, branch, commit)
-      #     rescue ActiveRecord::RecordNotFound
-      #       # ignored
-      #     end
-      #   end
-      # end
     end
   end
 
