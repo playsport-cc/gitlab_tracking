@@ -37,7 +37,7 @@
                 <h3 class="gitlab-tracking-title">
                     <%= link_to "#{commit.title}", "#{commit.merge_request_url}", :target => "_blank" %>
                 </h3>
-                Request to merge <code><%= commit.source_branch %></code> into <code><%= commit.target_branch %><code>
+                Request to merge <code><%= commit.source_branch %></code> into <code><%= commit.target_branch %></code>
                 <p>
                     update at 
                     <%= I18n.l commit.last_edited_at.in_time_zone(User.current.time_zone), :format => :long %>    
