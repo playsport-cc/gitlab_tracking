@@ -2,7 +2,7 @@ class CreateGitlabTrackingCommits < ActiveRecord::Migration
   def change
     create_table :gitlab_tracking_commits do |t|
       t.integer :issue_id
-      t.string :git_hash
+      t.string :git_hash, :limit => 1024
       t.string :author_name
       t.string :author_email
       t.text :message
