@@ -21,6 +21,13 @@
         background-color: #fbe5e1;
         border-radius: 3px;
     }
+    .gitlab-tracking-state {
+        float: right;
+        padding: 3px;
+        border-radius: 3px;
+        background: #eee;
+        color: #333;
+    }
 </style>
 
 <hr>
@@ -34,6 +41,7 @@
     <% gtc_commit_list.each do |commit| %>
         <div class="gitlab-tracking-row">
             <div class="gitlab-tracking-content">
+                <div class="gitlab-tracking-state gitlab-tracking-state-<%= commit.state.downcase.gsub(/\s/, '-') %>"><%= commit.state %></div>
                 <h3 class="gitlab-tracking-title">
                     <%= link_to "#{commit.title}", "#{commit.merge_request_url}", :target => "_blank" %>
                 </h3>
