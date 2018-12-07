@@ -1,3 +1,5 @@
+require 'json'
+
 class GitlabTrackingController < ApplicationController
   unloadable
   skip_before_filter  :verify_authenticity_token
@@ -11,19 +13,37 @@ class GitlabTrackingController < ApplicationController
   protected
 
   def parse_push_hook(body)
-    search_regexp = get_issue_regexp
-    branch = body['ref']
-    body['commits'].each do |commit|
-      match_regexp = commit['message'].gsub search_regexp
+    if body['object_kind'] == 'merge_request'
+      search_regexp = get_issue_regexp
+      attributes = body['object_attributes']
+      # branchs
+      source_branch = attributes['source_branch']
+      target_branch = attributes['target_branch']
+
+      # search title
+      match_regexp = attributes['title'].gsub search_regexp
       match_regexp.each do |issue_raw|
         issue_raw =~ /(?<issue_number>\d+)/
-        begin
-          issue = Issue.find(Regexp.last_match['issue_number'].to_i)
-          GitlabTrackingCommit.parse_commit_and_create(issue, branch, commit)
-        rescue ActiveRecord::RecordNotFound
-          # ignored
-        end
+          begin
+            issue = Issue.find(Regexp.last_match['issue_number'].to_i)
+            GitlabTrackingCommit.parse_pr_and_create(issue, source_branch, attributes, attribute['last_commit'])
+          rescue ActiveRecord::RecordNotFound
+            # ignored
+          end
       end
+
+      # body['commits'].each do |commit|
+      #   match_regexp = commit['message'].gsub search_regexp
+      #   match_regexp.each do |issue_raw|
+      #     issue_raw =~ /(?<issue_number>\d+)/
+      #     begin
+      #       issue = Issue.find(Regexp.last_match['issue_number'].to_i)
+      #       GitlabTrackingCommit.parse_commit_and_create(issue, branch, commit)
+      #     rescue ActiveRecord::RecordNotFound
+      #       # ignored
+      #     end
+      #   end
+      # end
     end
   end
 
