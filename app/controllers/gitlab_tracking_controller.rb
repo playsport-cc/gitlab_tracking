@@ -26,7 +26,7 @@ class GitlabTrackingController < ApplicationController
         issue_raw =~ /(?<issue_number>\d+)/
           begin
             issue = Issue.find(Regexp.last_match['issue_number'].to_i)
-            GitlabTrackingCommit.parse_pr_and_create(issue, source_branch, attributes, attribute['last_commit'])
+            GitlabTrackingCommit.parse_pr_and_create(issue, source_branch, attributes, attributes['last_commit'])
           rescue ActiveRecord::RecordNotFound
             # ignored
           end
