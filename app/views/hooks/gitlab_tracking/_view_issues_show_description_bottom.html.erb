@@ -14,6 +14,13 @@
     .gitlab-tracking-row p {
         margin: 0;
     }
+    .gitlab-tracking-row code {
+        display: inline-block;
+        padding: 2px 4px;
+        color: #c0341d;
+        background-color: #fbe5e1;
+        border-radius: 3px;
+    }
 </style>
 
 <hr>
@@ -30,7 +37,7 @@
                 <h3 class="gitlab-tracking-title">
                     <%= link_to "#{commit.title}", "#{commit.merge_request_url}", :target => "_blank" %>
                 </h3>
-                <p>Request to merge <%= commit.source_branch %> into  <%= commit.target_branch %> </p>   
+                Request to merge <code><%= commit.source_branch %></code> into <code><%= commit.target_branch %><code>
                 <p>
                     update at 
                     <%= I18n.l commit.last_edited_at.in_time_zone(User.current.time_zone), :format => :long %>    
